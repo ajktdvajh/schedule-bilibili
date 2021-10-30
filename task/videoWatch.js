@@ -33,18 +33,6 @@ class videoWatch extends base {
       );
     }
 
-    // 分享任务
-    if (!user.share) {
-      await this.videoShare(
-        user.rankList[parseInt(Math.random() * user.rankList.length)]
-      );
-    } else {
-      console.info(
-        '----- 本日分享视频任务已经完成了，不需要再分享视频了 -----'
-      );
-    }
-  }
-
   /**
    * 查询 存在哪些视频
    */
@@ -104,23 +92,6 @@ class videoWatch extends base {
       console.error('----- error 视频播放失败 -----' + result.message);
     }
     return result;
-  }
-
-  async videoShare(bvid) {
-    const URL = `https://api.bilibili.com/x/web-interface/share/add`;
-    const result = await this.request.post(
-      URL,
-      require('qs').stringify({
-        bvid,
-        csrf: this.getCookie('bili_jct'),
-      })
-    );
-
-    if (result.code === 0) {
-      console.info('----- 视频分享成功 -----');
-    } else {
-      console.error('----- error 视频分享失败 -----' + result.message);
-    }
   }
 
   getTaskName() {
